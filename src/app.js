@@ -3,15 +3,15 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
-const accounts = undefined;
-const users = undefined;
+let  accounts = undefined;
+let  users = undefined;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 // app.set('/', path.join(__dirname, 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-fs.readFile('/json/accounts', 'utf-8', (err, data) => {
+fs.readFile(path.join(__dirname, 'json', 'accounts.json'), 'utf-8', (err, data) => {
   if (err) {
     console.log(err);
     return;
@@ -19,9 +19,10 @@ fs.readFile('/json/accounts', 'utf-8', (err, data) => {
 
   const accountData = data;
   accounts = JSON.parse(accountData);
+  
 });
 
-fs.readFile('/json/users', 'utf-8', (err, data) => {
+fs.readFile(path.join(__dirname, 'json', 'users.json'), 'utf-8', (err, data) => {
   if (err) {
     console.log(err);
     return;
