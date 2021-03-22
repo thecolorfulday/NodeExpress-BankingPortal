@@ -11,7 +11,7 @@ app.set('view engine', 'ejs')
 // app.set('/', path.join(__dirname, 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-fs.readFile('/json/accounts', 'utf-8', (err, data) => {
+fs.readFile('/json/accounts.json', 'utf-8', (err, data) => {
   if (err) {
     console.log(err);
     return;
@@ -21,7 +21,7 @@ fs.readFile('/json/accounts', 'utf-8', (err, data) => {
   accounts = JSON.parse(accountData);
 });
 
-fs.readFile('/json/users', 'utf-8', (err, data) => {
+fs.readFile('/json/users.json', 'utf-8', (err, data) => {
   if (err) {
     console.log(err);
     return;
@@ -65,6 +65,4 @@ app.get('/', (req, res) => {
  * and render it using the loaded module’s __express function.
  */
 
-app.listen(3000, ()=>{
-  console.log('PS Project Running on port 3000!');
-});
+app.listen(3000);
