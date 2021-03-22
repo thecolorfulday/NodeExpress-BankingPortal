@@ -8,7 +8,7 @@ let  users = undefined;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
-// app.set('/', path.join(__dirname, 'public'));
+// use static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 fs.readFile(path.join(__dirname, 'json', 'accounts.json'), 'utf-8', (err, data) => {
