@@ -16,7 +16,7 @@ const accounts = JSON.parse(accountData);
 const userData = fs.readFileSync(path.join(__dirname, 'json', 'users.json'), 'utf-8');
 const users = JSON.parse(userData);
 
-app.get('/saving', (req, res) => {
+app.get('/savings', (req, res) => {
   res.render('account', {account: accounts.savings});
 });
 app.get('/checking', (req, res) => {
