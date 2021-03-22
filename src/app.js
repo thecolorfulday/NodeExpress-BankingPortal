@@ -32,12 +32,7 @@ app.get('/profile', (req, res) => {
   })
 });
 
-app.get('/', (req, res) => {
-  res.render('index', {
-    title: 'Account Summary',
-    accounts: accounts
-  });
-});
+app.get('/', (req, res) => res.render('index', { title: 'Account Summary', accounts: accounts }));
 
 /**
  * res.render(view [, locals] [, callback])
