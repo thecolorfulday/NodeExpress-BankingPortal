@@ -3,34 +3,18 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
-let  accounts = undefined;
-let  users = undefined;
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 // use static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-fs.readFile(path.join(__dirname, 'json', 'accounts.json'), 'utf-8', (err, data) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
+/*-----------------------------------*/
+/* File handling and routing */
+const accountData = fs.readFileSync(path.join(__dirname, 'json', 'accounts.json'), 'utf-8');
+const accounts = JSON.parse(accountData);
 
-  const accountData = data;
-  accounts = JSON.parse(accountData);
-  
-});
-
-fs.readFile(path.join(__dirname, 'json', 'users.json'), 'utf-8', (err, data) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-
-  const userData  = data;
-  users = JSON.parse(userData);
-});
+const userData = fs.readFileSync(path.join(__dirname, 'json', 'users.json'), 'utf-8');
+const users = JSON.parse(userData);
 
 app.get('/saving', (req, res) => {
   res.render('account', {account: accounts.savings});
