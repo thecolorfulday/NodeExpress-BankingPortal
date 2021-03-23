@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const app = express();
+// 引入自定义的文件时候，注意要加路径
+const { accounts, users, writJSON, writeJSON } = require('./data');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
@@ -10,11 +12,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /*-----------------------------------*/
 /* File handling and routing */
-const accountData = fs.readFileSync(path.join(__dirname, 'json', 'accounts.json'), 'utf-8');
-const accounts = JSON.parse(accountData);
-
-const userData = fs.readFileSync(path.join(__dirname, 'json', 'users.json'), 'utf-8');
-const users = JSON.parse(userData);
+// const accountData = fs.readFileSync(path.join(__dirname, 'json', 'accounts.json'), 'utf-8');
+// const accounts = JSON.parse(accountData);
+// const userData = fs.readFileSync(path.join(__dirname, 'json', 'users.json'), 'utf-8');
+// const users = JSON.parse(userData);
 
 app.get('/savings', (req, res) => {
   res.render('account', {
@@ -49,9 +50,9 @@ app.get('/transfer', (req, res) => {
 app.post('/transfer', (req, res) => {
   accounts[req.body.from].balance -= parseInt(req.body.amount, 10);
   accounts[req.body.to].balance += parseInt(req.body.amount, 10);
-  let accountsJSON = JSON.stringify(accounts);
-
-  fs.writeFileSync(path.join(__dirname, 'json', 'accounts.json'), accountsJSON, 'utf-8');
+  // let accountsJSON = JSON.stringify(accounts);
+  // fs.writeFileSync(path.join(__dirname, 'json', 'accounts.json'), accountsJSON, 'utf-8');
+  writeJSON();
 
   res.render('transfer', {
     message: 'Transfer Completed'
@@ -65,8 +66,9 @@ app.get('/payment', (req, res) => {
 app.post('/payment', (req, res) => {
   accounts.credit.balance -= req.body.amount;
   accounts.credit.available += parseInt(req.body.amount);
-  let accountsJSON = JSON.stringify(accounts);
-  fs.writeFileSync(path.join(__dirname, 'json', 'accounts.json'), accountsJSON, 'utf8');
+  // let accountsJSON = JSON.stringify(accounts);
+  // fs.writeFileSync(path.join(__dirname, 'json', 'accounts.json'), accountsJSON, 'utf8');
+  writeJSON();
   res.render('payment', {
     message: 'Payment Successful',
     account: accounts.credit
